@@ -8,6 +8,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
 
 // Initialize Express app
 const app = express();
@@ -22,7 +23,7 @@ app.use(express.json());
 
 // MongoDB connection string.
 // This string is generated from the inputs provided in the UI.
-mongoose.connect('mongodb://localhost:27017/ClinicDB', {
+mongoose.connect('mongodb+srv://dhwanipatel0118_db_user:dhanu2684@fullstack.agwwrxw.mongodb.net/ClinicDB', {
     useNewUrlParser: true, // Use the new URL parser instead of the deprecated one
     useUnifiedTopology: true // Use the new server discovery and monitoring engine
 })
@@ -51,7 +52,7 @@ const Schema = mongoose.Schema;
 const patientSchema = new Schema({
     patientName: { type: String, required: true  },
     doctorAssigned: { type: String, required: true  },
-    diagnosis: { type: String, required: true  }
+    diagnosis: { type: String }
 });
 
 // Create a Mongoose model from the patientSchema.
@@ -69,7 +70,7 @@ const router = express.Router();
 
 // Mount the router middleware at the '/api/patients' path.
 // All routes defined on this router will be prefixed with '/api/patients'.
-app.use('/api/v1/patients', router);
+app.use('/api/v1/patient', router);
 
 // Route to get all patients from the database.
 // Handles GET requests to '/api/patients/'.
@@ -97,7 +98,7 @@ router.route("/:id")
 
 // Route to add a new patient to the database.
 // Handles POST requests to '/api/patients/add'.
-router.route("/patient")
+router.route("/")
     .post(async (req, res) => { // Added async
         // Extract attributes from the request body.
         const patientName = req.body.patientName;
