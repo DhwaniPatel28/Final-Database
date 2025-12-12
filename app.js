@@ -20,19 +20,22 @@ const port = process.env.PORT || 3000; // Default port set to 3000
 app.use(cors());
 // Enable Express to parse JSON formatted request bodies
 app.use(express.json());
+app.get("/", (req,res) => {
+    res.send("Patient API is running");
+});
 
 // MongoDB connection string.
 // This string is generated from the inputs provided in the UI.
-mongoose.connect('mongodb+srv://dhwanipatel0118_db_user:dhanu2684@fullstack.agwwrxw.mongodb.net/ClinicDB', {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true, // Use the new URL parser instead of the deprecated one
     useUnifiedTopology: true // Use the new server discovery and monitoring engine
 })
 .then(() => {
     console.log('Connected to MongoDB');
     // Start the Express server only after successfully connecting to MongoDB
-    app.listen(port, () => {
+   /* app.listen(port, () => {
         console.log('Patient API Server is running on port ' + port);
-    });
+    });*/
 })
 .catch((error) => {
     // Log any errors that occur during the MongoDB connection
