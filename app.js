@@ -23,6 +23,9 @@ app.use(express.json());
 app.get("/", (req,res) => {
     res.send("Patient API is running");
 });
+app.listen(port, () => {
+    console.log('Patient API Server is running on port ' + port);
+});
 
 // MongoDB connection string.
 // This string is generated from the inputs provided in the UI.
@@ -32,10 +35,6 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => {
     console.log('Connected to MongoDB');
-    // Start the Express server only after successfully connecting to MongoDB
-   /* app.listen(port, () => {
-        console.log('Patient API Server is running on port ' + port);
-    });*/
 })
 .catch((error) => {
     // Log any errors that occur during the MongoDB connection
